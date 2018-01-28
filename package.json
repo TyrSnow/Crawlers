@@ -1,0 +1,9 @@
+{
+  "name": "Crawlers",
+  "version": "0.0.1",
+  "description": "Store my crawlers.",
+  "dependencies": {
+    "puppeteer": "^1.0.0"
+  },
+  "license": "MIT"
+}
