@@ -1,4 +1,4 @@
-import Crawler from '../utils/Crawler';
+import Crawler from '..';
 
 export default class PoetryCrawler extends Crawler {
   async wait() {
@@ -10,6 +10,8 @@ export default class PoetryCrawler extends Crawler {
   }
 
   async crawl() {
+    let text = await this.$.collectAttrs('body');
 
+    return text;
   }
 }

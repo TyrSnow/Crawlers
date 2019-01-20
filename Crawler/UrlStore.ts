@@ -5,10 +5,10 @@ import UniqueList from './uniqueList';
 export default class UrlStore extends UniqueList {
   private cur: number
   constructor(
-    list = []
+    list: Array<string> = []
   ) {
     super(list);
-    this.cur = this.list.length - 1;
+    this.cur = Math.max(0, this.list.length - 1);
   }
 
   next(): string {

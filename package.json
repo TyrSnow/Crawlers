@@ -1,9 +1,23 @@
 {
-  "name": "Crawlers",
+  "name": "crawler_core",
   "version": "0.0.1",
-  "description": "Store my crawlers.",
-  "dependencies": {
-    "puppeteer": "^1.0.0"
+  "description": "some tools to fast crawler develop.",
+  "scripts": {
+    "demo": "ts-node ./demo/index.ts"
   },
-  "license": "MIT"
+  "dependencies": {
+    "@types/node": "^10.12.18",
+    "@types/puppeteer": "^1.11.1",
+    "puppeteer": "^1.0.0",
+    "typescript": "^3.2.4"
+  },
+  "main": "index.ts",
+  "license": "MIT",
+  "author": {
+    "name": "Yu Tian",
+    "email": "1127114376@qq.com"
+  },
+  "devDependencies": {
+    "ts-node": "^7.0.1"
+  }
 }

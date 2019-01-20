@@ -1,10 +1,11 @@
 export default class UniqueList {
   public length: number
   constructor(
-    protected list = []
+    protected list: Array<string> = []
   ) {
     this.length = this.list.length;
   }
+
   private push_item(str: string) {
     if (this.list.indexOf(str) === -1) {
       this.list.push(str);
