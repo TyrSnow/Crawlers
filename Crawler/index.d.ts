@@ -4,7 +4,11 @@ interface IStore {
   flush(): void
 }
 
-interface ICrawler{
+interface IReport {
+
+}
+
+interface ICrawler {
   wait(): Promise<void>
   collect?(): Promise<Array<string>>
   crawl(): Promise<void>

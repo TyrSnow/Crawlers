@@ -3,3 +3,4 @@ logs
 *.map
 build
 data
+demo/output.json

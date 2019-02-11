@@ -14,9 +14,9 @@ export default class Tools {
   async collectLinks(selector: string): Promise<Array<any>> {
     let $doms = await this.page.$$(`${selector} a`);
 
-    return $doms.map(async $dom => {
+    return Promise.all($doms.map(async $dom => {
       return await this.page.evaluate(dom => dom.getAttribute('href'), $dom);
-    });
+    }));
   }
   
   /**
@@ -26,9 +26,9 @@ export default class Tools {
   async collectImage(selector: string): Promise<Array<any>> {
     let $doms = await this.page.$$(`${selector} img`);
 
-    return $doms.map(async $dom => {
+    return Promise.all($doms.map(async $dom => {
       return await this.page.evaluate(dom => dom.getAttribute('src'), $dom);
-    });
+    }));
   }
 
   /**
@@ -50,9 +50,33 @@ export default class Tools {
   async collectText(selector) {
     let $doms = await this.page.$$(selector);
     
-    return $doms.map(async $dom => {
+    return Promise.all($doms.map(async $dom => {
       return await this.page.evaluate(dom => dom.innerText, $dom);
-    });
+    }));
+  }
+
+  /**
+   * 采集页面上的表格
+   * @param selector 
+   * @param row 
+   * @param columns 
+   */
+  async collectTable(selector, row, columns) {
+    let $table = await this.page.$(selector);
+    return await this.page.evaluate(($table, row, columns) => {
+      let $rows = $table.querySelectorAll(row);
+      let rows = [];
+      $rows.forEach($row => {
+        let row = {};
+        for (let column of columns) {
+          let $col = $row.querySelector(column.selector);
+          row[column.index] = column.collect ? column.collect($col) : $col.innerText;
+        }
+        rows.push(row);
+      });
+
+      return rows;
+    }, $table, row, columns);
   }
 
   /**
@@ -84,5 +108,26 @@ export default class Tools {
    */
   async isExist(selector) {
 
+  }
+
+  async waitForSelector(selector, option?) {
+    return this.page.waitForSelector(selector, option);
+  }
+
+  /**
+   * 等待testor返回true
+   */
+  async waitForTestor(testor) {
+    return new Promise(async (resolve, reject) => {
+      tick();
+
+      async function tick() {
+        if (await testor()) {
+          return resolve();
+        } else {
+          setTimeout(tick, 500)
+        }
+      }
+    });
   }
 }
